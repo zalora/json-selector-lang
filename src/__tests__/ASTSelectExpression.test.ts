@@ -1,0 +1,28 @@
+// Copyright (c) ZALORA
+//
+// This source code is licensed under the MIT license found in the
+// LICENSE file in the root directory of this source tree.
+
+import ASTSelectExpression from '../AST/ASTSelectExpression';
+import { ident } from '../tokens';
+
+describe('ASTSelectExpression', () => {
+  const token = { type: ident, literal: 'data' };
+  it('tests with token input', () => {
+    const astI = new ASTSelectExpression(token, token.literal);
+    expect(astI).toMatchInlineSnapshot(`
+      ASTSelectExpression {
+        "key": "data",
+        "token": Object {
+          "literal": "data",
+          "type": Symbol(ident),
+        },
+      }
+    `);
+  });
+
+  it('tests if tokenLiteral returns literal of the token', () => {
+    const astI = new ASTSelectExpression(token, token.literal);
+    expect(astI.tokenLiteral()).toMatchInlineSnapshot(`"data"`);
+  });
+});

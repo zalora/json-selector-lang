@@ -111,4 +111,5 @@ class Lexer {
   };
 }
 
+export { Token };
 export default Lexer;

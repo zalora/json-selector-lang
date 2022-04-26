@@ -8,5 +8,5 @@ export const int = Symbol('int');
 export const ident = Symbol('ident');
 export const lbracket = Symbol('[');
 export const rbracket = Symbol(']');
-export const illegal = Symbol('illegal');
 export const eof = Symbol('eof');
+export const illegal = Symbol('illegal');

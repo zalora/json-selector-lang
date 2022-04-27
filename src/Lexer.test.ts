@@ -4,7 +4,7 @@
 // LICENSE file in the root directory of this source tree.
 
 import Lexer from './Lexer';
-import { dot, int, ident, lbracket, rbracket, eof } from './Tokens';
+import { dot, int, ident, lbracket, rbracket, eof } from './tokens';
 
 describe('Lexer', () => {
   it('tests with empty input', () => {
@@ -21,6 +21,7 @@ describe('Lexer', () => {
     const testCases = [
       { type: dot, literal: '.' },
       { type: ident, literal: 'data' },
+      { type: eof, literal: '' },
     ];
     const l = new Lexer(input);
 
@@ -39,6 +40,7 @@ describe('Lexer', () => {
       { type: ident, literal: 'items' },
       { type: lbracket, literal: '[' },
       { type: rbracket, literal: ']' },
+      { type: eof, literal: '' },
     ];
     const l = new Lexer(input);
 
@@ -60,6 +62,7 @@ describe('Lexer', () => {
       { type: rbracket, literal: ']' },
       { type: dot, literal: '.' },
       { type: ident, literal: 'image' },
+      { type: eof, literal: '' },
     ];
     const l = new Lexer(input);
 
@@ -81,6 +84,7 @@ describe('Lexer', () => {
       { type: rbracket, literal: ']' },
       { type: dot, literal: '.' },
       { type: ident, literal: 'image' },
+      { type: eof, literal: '' },
     ];
     const l = new Lexer(input);
 

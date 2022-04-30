@@ -3,8 +3,8 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
+import { IToken as Token } from '../tokens';
 import ASTExpression from './ASTExpression';
-import { Token } from '../Lexer';
 
 class ASTIdentifier implements ASTExpression {
   token: Token;
@@ -15,10 +15,12 @@ class ASTIdentifier implements ASTExpression {
     this.value = value;
   }
 
-  tokenLiteral(): string {
-    const { literal = '' } = this.token || {};
+  toString(): string {
+    return this.value;
+  }
 
-    return literal;
+  tokenLiteral(): string {
+    return this.token.literal;
   }
 }
 

@@ -9,9 +9,9 @@ import { ident } from '../tokens';
 describe('ASTIdentifier', () => {
   const token = { type: ident, literal: 'data' };
 
-  it('tests with token input', () => {
-    const astI = new ASTIdentifier(token, token.literal);
-    expect(astI).toMatchInlineSnapshot(`
+  it('tests instance with token input', () => {
+    const astIdent = new ASTIdentifier(token, token.literal);
+    expect(astIdent).toMatchInlineSnapshot(`
       ASTIdentifier {
         "token": Object {
           "literal": "data",
@@ -22,8 +22,13 @@ describe('ASTIdentifier', () => {
     `);
   });
 
-  it('tests if tokenLiteral returns literal of the token', () => {
-    const astI = new ASTIdentifier(token, token.literal);
-    expect(astI.tokenLiteral()).toMatchInlineSnapshot(`"data"`);
+  it('tests toString returns value of the identifier', () => {
+    const astIdent = new ASTIdentifier(token, token.literal);
+    expect(astIdent.toString()).toMatchInlineSnapshot(`"data"`);
+  });
+
+  it('tests tokenLiteral returns literal of the token', () => {
+    const astIdent = new ASTIdentifier(token, token.literal);
+    expect(astIdent.tokenLiteral()).toMatchInlineSnapshot(`"data"`);
   });
 });

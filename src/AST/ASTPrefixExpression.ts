@@ -6,17 +6,23 @@
 import { IToken as Token } from '../tokens';
 import ASTExpression from './ASTExpression';
 
-class ASTSelectExpression implements ASTExpression {
+class ASTPrefixExpression implements ASTExpression {
   token: Token;
-  key: string;
+  oper: String;
+  right: ASTExpression | null;
 
-  constructor(token: Token, key: string) {
+  constructor(token: Token, oper: String, right: ASTExpression | null = null) {
     this.token = token;
-    this.key = key;
+    this.oper = oper;
+    this.right = right;
   }
 
   toString(): string {
-    return `${this.token.literal}${this.key}`;
+    if (!this.right) {
+      return '';
+    }
+
+    return `${this.oper}${JSON.stringify(this.right, null, 2)}`;
   }
 
   tokenLiteral(): string {
@@ -24,4 +30,4 @@ class ASTSelectExpression implements ASTExpression {
   }
 }
 
-export default ASTSelectExpression;
+export default ASTPrefixExpression;

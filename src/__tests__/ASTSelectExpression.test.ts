@@ -8,9 +8,10 @@ import { ident } from '../tokens';
 
 describe('ASTSelectExpression', () => {
   const token = { type: ident, literal: 'data' };
-  it('tests with token input', () => {
-    const astI = new ASTSelectExpression(token, token.literal);
-    expect(astI).toMatchInlineSnapshot(`
+
+  it('tests instance with token input', () => {
+    const astSelectExp = new ASTSelectExpression(token, token.literal);
+    expect(astSelectExp).toMatchInlineSnapshot(`
       ASTSelectExpression {
         "key": "data",
         "token": Object {
@@ -21,8 +22,13 @@ describe('ASTSelectExpression', () => {
     `);
   });
 
+  it('tests toString returns value of the identifier', () => {
+    const astSelectExp = new ASTSelectExpression(token, token.literal);
+    expect(astSelectExp.toString()).toMatchInlineSnapshot(`"datadata"`);
+  });
+
   it('tests if tokenLiteral returns literal of the token', () => {
-    const astI = new ASTSelectExpression(token, token.literal);
-    expect(astI.tokenLiteral()).toMatchInlineSnapshot(`"data"`);
+    const astSelectExp = new ASTSelectExpression(token, token.literal);
+    expect(astSelectExp.tokenLiteral()).toMatchInlineSnapshot(`"data"`);
   });
 });

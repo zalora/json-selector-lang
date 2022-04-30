@@ -6,23 +6,29 @@
 import { IToken as Token } from '../tokens';
 import ASTExpression from './ASTExpression';
 
-class ASTIndexExpression implements ASTExpression {
+class ASTInfixExpression implements ASTExpression {
   token: Token;
   left: ASTExpression | null;
-  index: ASTExpression | null;
+  oper: String;
+  right: ASTExpression | null;
 
-  constructor(token: Token, left: ASTExpression | null, index: ASTExpression | null) {
+  constructor(token: Token, left: ASTExpression | null, oper: String, right: ASTExpression | null) {
     this.token = token;
     this.left = left;
-    this.index = index;
+    this.oper = oper;
+    this.right = right;
   }
 
   toString(): string {
-    if (!this.left || !this.index) {
+    if (!this.left || !this.right) {
       return '';
     }
 
-    return `(${JSON.stringify(this.left, null, 2)}[${JSON.stringify(this.index, null, 2)}])`;
+    return `${JSON.stringify(this.left, null, 2)} ${this.oper} ${JSON.stringify(
+      this.right,
+      null,
+      2,
+    )}`;
   }
 
   tokenLiteral(): string {
@@ -30,4 +36,4 @@ class ASTIndexExpression implements ASTExpression {
   }
 }
 
-export default ASTIndexExpression;
+export default ASTInfixExpression;

@@ -5,7 +5,6 @@
 
 interface ASTNode {
   tokenLiteral(): string;
-  description?: string;
 }
 
 export default ASTNode;

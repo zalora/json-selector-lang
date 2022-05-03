@@ -5,7 +5,7 @@
 
 import Lexer from './Lexer';
 import ASTExpression from './AST/ASTExpression';
-import { IToken as Token, lbracket, dot, ident, int, rbracket, eof } from './tokens';
+import { lbracket, dot, ident, int, rbracket, eof, Token } from './tokens';
 import ASTStatement from './AST/ASTStatement';
 import ASTExpressionStatement from './AST/ASTExpressionStatement';
 import ASTSelectExpression from './AST/ASTSelectExpression';
@@ -16,16 +16,15 @@ import Program from './AST/Program';
 
 enum Precedence {
   lowest,
-  prefix, // -x or !x
-  index, // arr[index]
+  index,
 }
 
-type PrefixParser = () => ASTExpression | null;
+type PrefixParser = () => ASTExpression | undefined;
 
-type InfixParser = (arg: ASTExpression) => ASTExpression;
+type InfixParser = (arg?: ASTExpression) => ASTExpression | undefined;
 
-interface ParserCollection<Parser> {
-  [key: symbol]: Parser;
+interface IParser<ParserType> {
+  [key: symbol]: ParserType;
 }
 
 class Parser {
@@ -35,12 +34,10 @@ class Parser {
   private curToken!: Token;
   private peekToken!: Token;
 
-  private prefixParseFuncs: ParserCollection<PrefixParser>;
-  private infixParseFuncs: ParserCollection<InfixParser>;
+  private prefixParseFuncs: IParser<PrefixParser>;
+  private infixParseFuncs: IParser<InfixParser>;
 
-  private precedenceMap: {
-    [key: symbol]: Precedence;
-  } = {
+  private precedenceMap: { [key: symbol]: Precedence } = {
     [lbracket]: Precedence.index,
   };
 
@@ -49,11 +46,11 @@ class Parser {
     this.prefixParseFuncs = {};
     this.infixParseFuncs = {};
 
-    this.registerPrefix(this.parseSelectExpression, dot);
-    this.registerPrefix(this.parseIdentifier, ident);
-    this.registerPrefix(this.parseIntegerLiteral, int);
+    this.registerPrefix(this.parseSelectExpression.bind(this), dot);
+    this.registerPrefix(this.parseIdentifier.bind(this), ident);
+    this.registerPrefix(this.parseIntegerLiteral.bind(this), int);
 
-    this.registerInfix(this.parseIndexExpression, lbracket);
+    this.registerInfix(this.parseIndexExpression.bind(this), lbracket);
 
     this.nextToken();
     this.nextToken();
@@ -74,10 +71,8 @@ class Parser {
       this.nextToken();
     }
 
-    if (this.errors.length >= 0) {
-      this.errors.forEach((err) => {
-        throw new Error(err);
-      });
+    if (this.errors.length > 0) {
+      throw this.errors;
     }
 
     return program;
@@ -85,7 +80,7 @@ class Parser {
 
   // -- Token Handling --
 
-  private nextToken() {
+  private nextToken(): void {
     this.curToken = this.peekToken;
     this.peekToken = this.lexer.nextToken();
   }
@@ -110,14 +105,14 @@ class Parser {
     }
   }
 
-  private peekError(type: symbol) {
+  private peekError(type: symbol): void {
     this.errors.push(
       `expected next token to be ${type.toString()}, got ${this.peekToken.type.toString()} instead`,
     );
   }
 
-  noPrefixParseFuncErr(type: String) {
-    this.errors.push(`prefix parse func for ${type.toString()} not found`);
+  private noPrefixParseFuncErr(type: String): void {
+    this.errors.push(`prefix parse func for ${type} not found`);
   }
 
   // -- Precedence --
@@ -131,32 +126,23 @@ class Parser {
     return precedence;
   }
 
-  private curPrecedence(): Precedence {
-    const precedence = this.precedenceMap[this.curToken.type];
-    if (!precedence) {
-      return Precedence.lowest;
-    }
-
-    return precedence;
-  }
-
   // -- Parsing --
 
-  private parseStatement(): ASTStatement | null {
-    // JSL only has one type of statement right now.
+  // JSL only has one type of statement right now.
+  private parseStatement(): ASTStatement {
     return this.parseExpressionStatement();
   }
 
-  private parseExpressionStatement(): ASTExpressionStatement | null {
+  private parseExpressionStatement(): ASTExpressionStatement {
     return new ASTExpressionStatement(this.curToken, this.parseExpression(Precedence.lowest));
   }
 
-  private parseExpression(precedence: Precedence): ASTExpression | null {
+  private parseExpression(precedence: Precedence): ASTExpression | undefined {
     const fn = this.prefixParseFuncs[this.curToken.type];
     if (!fn) {
       this.noPrefixParseFuncErr(this.curToken.literal);
 
-      return null;
+      return;
     }
 
     let leftExpr = fn();
@@ -173,76 +159,58 @@ class Parser {
     return leftExpr;
   }
 
-  private parsePrefixExpression(): ASTExpression | null {
-    const tok = this.curToken;
-    const lit = this.curToken.literal;
-
-    this.nextToken();
-
-    return new ASTPrefixExpression(tok, lit, this.parseExpression(Precedence.prefix));
-  }
-
-  private parseInfixExpression(left: ASTExpression): ASTExpression | null {
-    const tok = this.curToken;
-    const op = this.curToken.literal;
-    const prec = this.curPrecedence();
-
-    this.nextToken();
-
-    return new ASTInfixExpression(tok, left, op, this.parseExpression(prec));
-  }
-
-  /// A select expression is represented by the following grammar
-  /// .<identifier>
-  private parseSelectExpression(): ASTExpression | null {
+  /**
+   * A select expression is represented by the following grammar
+   * .<identifier>
+   */
+  private parseSelectExpression(): ASTExpression | undefined {
     const tok = this.curToken;
     if (!this.expectPeek(ident)) {
-      return null;
+      return;
     }
 
     return new ASTSelectExpression(tok, this.curToken.literal);
   }
 
-  /// An index expression is represented by the following grammar
-  /// [<integer literal>]
-  private parseIndexExpression(left: ASTExpression | null): ASTExpression | null {
+  /**
+   * An index expression is represented by the following grammar
+   * [<integer literal>]
+   */
+  private parseIndexExpression(left?: ASTExpression): ASTExpression | undefined {
     const tok = this.curToken;
-    if (!left) {
-      return null;
-    }
 
     if (!this.expectPeek(int)) {
-      return null;
+      return;
     }
 
     let idx = this.parseExpression(Precedence.lowest);
     if (!this.expectPeek(rbracket)) {
-      return null;
+      return;
     }
 
     return new ASTIndexExpression(tok, left, idx);
   }
 
-  private parseIntegerLiteral(): ASTExpression | null {
+  private parseIntegerLiteral(): ASTExpression | undefined {
     const value = parseInt(this.curToken.literal);
-    if (!value) {
+    if (value !== 0 && !value) {
       this.errors.push(`could not parse ${this.curToken.literal} as integer`);
 
-      return null;
+      return;
     }
 
     return new ASTIntegerLiteral(this.curToken, value);
   }
 
-  private parseIdentifier(): ASTExpression | null {
+  private parseIdentifier(): ASTExpression {
     return new ASTIdentifier(this.curToken, this.curToken.literal);
   }
 
-  private registerPrefix(fn: PrefixParser, type: symbol) {
+  private registerPrefix(fn: PrefixParser, type: symbol): void {
     this.prefixParseFuncs[type] = fn;
   }
 
-  private registerInfix(fn: InfixParser, type: symbol) {
+  private registerInfix(fn: InfixParser, type: symbol): void {
     this.infixParseFuncs[type] = fn;
   }
 }

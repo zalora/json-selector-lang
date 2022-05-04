@@ -1,0 +1,76 @@
+// Copyright (c) ZALORA
+//
+// This source code is licensed under the MIT license found in the
+// LICENSE file in the root directory of this source tree.
+//
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Program tests if tokenLiteral returns literal of the token as index expression 1`] = `
+"{
+  \\"token\\": {
+    \\"literal\\": \\"[\\"
+  },
+  \\"left\\": {
+    \\"token\\": {
+      \\"literal\\": \\".\\"
+    },
+    \\"key\\": \\"data\\"
+  },
+  \\"index\\": {
+    \\"token\\": {
+      \\"literal\\": \\"2\\"
+    },
+    \\"value\\": 2
+  }
+}"
+`;
+
+exports[`Program tests if tokenLiteral returns literal of the token as select expression 1`] = `
+"{
+  \\"token\\": {
+    \\"literal\\": \\".\\"
+  },
+  \\"key\\": \\"data\\"
+}"
+`;
+
+exports[`Program tests with token input as index expression 1`] = `
+Program {
+  "statements": Array [
+    ASTIndexExpression {
+      "index": ASTIntegerLiteral {
+        "token": Object {
+          "literal": "2",
+          "type": Symbol(int),
+        },
+        "value": 2,
+      },
+      "left": ASTSelectExpression {
+        "key": "data",
+        "token": Object {
+          "literal": ".",
+          "type": Symbol(.),
+        },
+      },
+      "token": Object {
+        "literal": "[",
+        "type": Symbol([),
+      },
+    },
+  ],
+}
+`;
+
+exports[`Program tests with token input as select expression 1`] = `
+Program {
+  "statements": Array [
+    ASTSelectExpression {
+      "key": "data",
+      "token": Object {
+        "literal": ".",
+        "type": Symbol(.),
+      },
+    },
+  ],
+}
+`;

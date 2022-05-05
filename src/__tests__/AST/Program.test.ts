@@ -22,8 +22,12 @@ describe('Program', () => {
     expect(pSelect).toMatchSnapshot();
   });
 
-  it('tests if tokenLiteral returns literal of the token as select expression', () => {
+  it('tests if tokenLiteral returns literal for token input as select expression', () => {
     expect(pSelect.tokenLiteral()).toMatchSnapshot();
+  });
+
+  it('tests if toString returns all the list of statements for token input as select expression', () => {
+    expect(pSelect.toString()).toMatchSnapshot();
   });
 
   const inputIndex = '.data[2]';
@@ -42,7 +46,11 @@ describe('Program', () => {
     expect(pIndex).toMatchSnapshot();
   });
 
-  it('tests if tokenLiteral returns literal of the token as index expression', () => {
+  it('tests if tokenLiteral returns literal for token input as index expression', () => {
     expect(pIndex.tokenLiteral()).toMatchSnapshot();
+  });
+
+  it('tests if toString returns all the list of statements for token input as index expression', () => {
+    expect(pSelect.toString()).toMatchSnapshot();
   });
 });

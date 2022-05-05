@@ -14,6 +14,14 @@ class Program implements ASTNode {
   }
 
   tokenLiteral(): string {
+    if (this.statements.length <= 0) {
+      return '';
+    }
+
+    return this.statements[0].tokenLiteral() || '';
+  }
+
+  toString(): string {
     return this.statements.reduce((prev, next) => prev + `${JSON.stringify(next, null, 2)}`, '');
   }
 }

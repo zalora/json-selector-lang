@@ -4,12 +4,12 @@
 // LICENSE file in the root directory of this source tree.
 
 import Lexer from './Lexer';
-import Program from './AST/Program';
 import Parser from './Parser';
+import Program from './AST/Program';
 
 // JSL parses raw JSL input and returns a program that can be evaluated.
 class JSL {
-  static async compile(input: string): Promise<Program> {
+  static compile(input: string): Program {
     const lexer = new Lexer(input);
     const parser = new Parser(lexer);
 

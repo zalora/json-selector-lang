@@ -18,7 +18,7 @@ class ASTIndexExpression implements ASTExpression {
   }
 
   toString(): string {
-    return `(${this.left?.toString()}[${this.index?.toString()}])`;
+    return `(${this.left?.toString() || ''}[${this.index?.toString() || ''}])`;
   }
 
   tokenLiteral(): string {

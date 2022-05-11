@@ -14,9 +14,9 @@ describe('ASTIntegerLiteral', () => {
     expect(astInt).toMatchSnapshot();
   });
 
-  it('tests toNumber returns value of the identifier', () => {
+  it('tests toString returns value of the identifier', () => {
     const astInt = new ASTIntegerLiteral(token, parseInt(token.literal));
-    expect(astInt.toNumber()).toMatchSnapshot();
+    expect(astInt.toString()).toMatchSnapshot();
   });
 
   it('tests tokenLiteral returns literal of the token', () => {

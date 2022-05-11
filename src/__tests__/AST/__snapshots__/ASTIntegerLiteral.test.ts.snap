@@ -10,6 +10,6 @@ ASTIntegerLiteral {
 }
 `;
 
-exports[`ASTIntegerLiteral tests toNumber returns value of the identifier 1`] = `2`;
+exports[`ASTIntegerLiteral tests toString returns value of the identifier 1`] = `"2"`;
 
 exports[`ASTIntegerLiteral tests tokenLiteral returns literal of the token 1`] = `"2"`;

@@ -3,7 +3,7 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-import { IToken as Token } from '../tokens';
+import { Token } from '../tokens';
 import ASTExpression from './ASTExpression';
 
 class ASTIntegerLiteral implements ASTExpression {
@@ -15,8 +15,8 @@ class ASTIntegerLiteral implements ASTExpression {
     this.value = value;
   }
 
-  toNumber(): number {
-    return this.value;
+  toString(): string {
+    return this.value.toString();
   }
 
   tokenLiteral(): string {

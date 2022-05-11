@@ -1,33 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ASTExpressionStatement tests if toString returns returns a stringified index expression 1`] = `
-"{
-  \\"token\\": {
-    \\"literal\\": \\"[\\"
-  },
-  \\"left\\": {
-    \\"token\\": {
-      \\"literal\\": \\".\\"
-    },
-    \\"key\\": \\"data\\"
-  },
-  \\"index\\": {
-    \\"token\\": {
-      \\"literal\\": \\"2\\"
-    },
-    \\"value\\": 2
-  }
-}"
-`;
+exports[`ASTExpressionStatement tests if toString returns returns a stringified index expression 1`] = `"(.data[2])"`;
 
-exports[`ASTExpressionStatement tests if toString returns returns a stringified select expression 1`] = `
-"{
-  \\"token\\": {
-    \\"literal\\": \\".\\"
-  },
-  \\"key\\": \\"data\\"
-}"
-`;
+exports[`ASTExpressionStatement tests if toString returns returns a stringified select expression 1`] = `".data"`;
 
 exports[`ASTExpressionStatement tests if tokenLiteral returns literal of the token as index expression 1`] = `"["`;
 

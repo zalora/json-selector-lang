@@ -1,22 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Program tests if toString returns all the list of statements for token input as index expression 1`] = `
-"{
-  \\"token\\": {
-    \\"literal\\": \\".\\"
-  },
-  \\"key\\": \\"data\\"
-}"
-`;
+exports[`Program tests if toString returns all the list of statements for token input as index expression 1`] = `"(.images[2])"`;
 
-exports[`Program tests if toString returns all the list of statements for token input as select expression 1`] = `
-"{
-  \\"token\\": {
-    \\"literal\\": \\".\\"
-  },
-  \\"key\\": \\"data\\"
-}"
-`;
+exports[`Program tests if toString returns all the list of statements for token input as select expression 1`] = `".data"`;
 
 exports[`Program tests if tokenLiteral returns literal for token input as index expression 1`] = `"["`;
 
@@ -34,7 +20,7 @@ Program {
         "value": 2,
       },
       "left": ASTSelectExpression {
-        "key": "data",
+        "key": "images",
         "token": Object {
           "literal": ".",
           "type": Symbol(.),

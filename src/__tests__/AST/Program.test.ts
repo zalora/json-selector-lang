@@ -30,7 +30,7 @@ describe('Program', () => {
     expect(pSelect.toString()).toMatchSnapshot();
   });
 
-  const inputIndex = '.data[2]';
+  const inputIndex = '.images[2]';
   const lIndex = new Lexer(inputIndex);
   const pIndex = new Program();
   const tokenDot = lIndex.nextToken();
@@ -51,6 +51,6 @@ describe('Program', () => {
   });
 
   it('tests if toString returns all the list of statements for token input as index expression', () => {
-    expect(pSelect.toString()).toMatchSnapshot();
+    expect(pIndex.toString()).toMatchSnapshot();
   });
 });

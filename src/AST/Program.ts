@@ -18,11 +18,11 @@ class Program implements ASTNode {
       return '';
     }
 
-    return this.statements[0].tokenLiteral() || '';
+    return this.statements[0]?.tokenLiteral() || '';
   }
 
   toString(): string {
-    return this.statements.reduce((prev, next) => prev + `${JSON.stringify(next, null, 2)}`, '');
+    return this.statements.reduce((prev, next) => prev + `${next.toString()}`, '');
   }
 }
 

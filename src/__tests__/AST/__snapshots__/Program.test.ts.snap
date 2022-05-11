@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Program tests if toString returns all the list of statements for token input as index expression 1`] = `"(.images[2])"`;
+
+exports[`Program tests if toString returns all the list of statements for token input as select expression 1`] = `".data"`;
+
+exports[`Program tests if tokenLiteral returns literal for token input as index expression 1`] = `"["`;
+
+exports[`Program tests if tokenLiteral returns literal for token input as select expression 1`] = `"."`;
+
+exports[`Program tests with token input as index expression 1`] = `
+Program {
+  "statements": Array [
+    ASTIndexExpression {
+      "index": ASTIntegerLiteral {
+        "token": Object {
+          "literal": "2",
+          "type": Symbol(int),
+        },
+        "value": 2,
+      },
+      "left": ASTSelectExpression {
+        "key": "images",
+        "token": Object {
+          "literal": ".",
+          "type": Symbol(.),
+        },
+      },
+      "token": Object {
+        "literal": "[",
+        "type": Symbol([),
+      },
+    },
+  ],
+}
+`;
+
+exports[`Program tests with token input as select expression 1`] = `
+Program {
+  "statements": Array [
+    ASTSelectExpression {
+      "key": "data",
+      "token": Object {
+        "literal": ".",
+        "type": Symbol(.),
+      },
+    },
+  ],
+}
+`;

@@ -3,8 +3,8 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-import Lexer from './Lexer';
-import { dot, int, ident, lbracket, rbracket, eof } from './tokens';
+import Lexer from '../Lexer';
+import { dot, int, ident, lbracket, rbracket, eof } from '../tokens';
 
 describe('Lexer', () => {
   it('tests with empty input', () => {

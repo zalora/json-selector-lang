@@ -6,6 +6,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
+    "test:updateSnapshots": "jest --config jestconfig.json -u",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
@@ -37,5 +38,9 @@
   "files": [
     "lib/**/*"
   ],
-  "keywords": ["json", "selector", "interpreter"]
+  "keywords": [
+    "json",
+    "selector",
+    "interpreter"
+  ]
 }

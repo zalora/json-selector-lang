@@ -3,12 +3,7 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE file in the root directory of this source tree.
 
-import { dot, int, ident, lbracket, rbracket, eof } from './tokens';
-
-interface Token {
-  type: Symbol;
-  literal: string;
-}
+import { dot, int, ident, lbracket, rbracket, eof, Token } from './tokens';
 
 // Lexer represents the lexical analyzer for JSON Selector Language
 class Lexer {

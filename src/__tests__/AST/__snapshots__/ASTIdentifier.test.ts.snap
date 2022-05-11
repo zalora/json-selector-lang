@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ASTIdentifier tests instance with token input 1`] = `
+ASTIdentifier {
+  "token": Object {
+    "literal": "data",
+    "type": Symbol(ident),
+  },
+  "value": "data",
+}
+`;
+
+exports[`ASTIdentifier tests toString returns value of the identifier 1`] = `"data"`;
+
+exports[`ASTIdentifier tests tokenLiteral returns literal of the token 1`] = `"data"`;

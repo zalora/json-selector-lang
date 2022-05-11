@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ASTSelectExpression tests if tokenLiteral returns literal of the token 1`] = `"data"`;
+
+exports[`ASTSelectExpression tests instance with token input 1`] = `
+ASTSelectExpression {
+  "key": "data",
+  "token": Object {
+    "literal": "data",
+    "type": Symbol(ident),
+  },
+}
+`;
+
+exports[`ASTSelectExpression tests toString returns value of the identifier 1`] = `"datadata"`;

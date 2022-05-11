@@ -10,3 +10,7 @@ export const lbracket = Symbol('[');
 export const rbracket = Symbol(']');
 export const eof = Symbol('eof');
 export const illegal = Symbol('illegal');
+export interface Token {
+  type: symbol;
+  literal: string;
+}

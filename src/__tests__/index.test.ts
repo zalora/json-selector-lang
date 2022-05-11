@@ -1,4 +1,4 @@
-import Program from './index';
+import Program from '../index';
 
 test('Program', () => {
   expect(Program()).toBe('hello world!');

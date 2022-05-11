@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ASTExpressionStatement tests if toString returns returns a stringified index expression 1`] = `"(.data[2])"`;
+
+exports[`ASTExpressionStatement tests if toString returns returns a stringified select expression 1`] = `".data"`;
+
+exports[`ASTExpressionStatement tests if tokenLiteral returns literal of the token as index expression 1`] = `"["`;
+
+exports[`ASTExpressionStatement tests if tokenLiteral returns literal of the token as select expression 1`] = `"."`;
+
+exports[`ASTExpressionStatement tests with token input as index expression 1`] = `
+ASTExpressionStatement {
+  "expression": ASTIndexExpression {
+    "index": ASTIntegerLiteral {
+      "token": Object {
+        "literal": "2",
+        "type": Symbol(int),
+      },
+      "value": 2,
+    },
+    "left": ASTSelectExpression {
+      "key": "data",
+      "token": Object {
+        "literal": ".",
+        "type": Symbol(.),
+      },
+    },
+    "token": Object {
+      "literal": "[",
+      "type": Symbol([),
+    },
+  },
+  "token": Object {
+    "literal": "[",
+    "type": Symbol([),
+  },
+}
+`;
+
+exports[`ASTExpressionStatement tests with token input as select expression 1`] = `
+ASTExpressionStatement {
+  "expression": ASTSelectExpression {
+    "key": "data",
+    "token": Object {
+      "literal": ".",
+      "type": Symbol(.),
+    },
+  },
+  "token": Object {
+    "literal": ".",
+    "type": Symbol(.),
+  },
+}
+`;

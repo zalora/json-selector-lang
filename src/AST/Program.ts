@@ -22,7 +22,7 @@ class Program implements ASTNode {
   }
 
   toString(): string {
-    return this.statements.reduce((prev, next) => prev + `${next.toString()}`, '');
+    return this.statements.reduce((prev, next) => prev + next.toString(), '');
   }
 }
 

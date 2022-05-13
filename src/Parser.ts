@@ -23,10 +23,6 @@ type PrefixParser = () => ASTExpression | undefined;
 
 type InfixParser = (arg?: ASTExpression) => ASTExpression | undefined;
 
-interface IParser<ParserType> {
-  [key: symbol]: ParserType;
-}
-
 class Parser {
   private lexer: Lexer;
   private errors: Array<string> = [];
@@ -34,10 +30,10 @@ class Parser {
   private curToken!: Token;
   private peekToken!: Token;
 
-  private prefixParseFuncs: IParser<PrefixParser>;
-  private infixParseFuncs: IParser<InfixParser>;
+  private prefixParseFuncs: Record<symbol, PrefixParser>;
+  private infixParseFuncs: Record<symbol, InfixParser>;
 
-  private precedenceMap: { [key: symbol]: Precedence } = {
+  private precedenceMap: Record<symbol, Precedence> = {
     [lbracket]: Precedence.index,
   };
 
@@ -128,7 +124,6 @@ class Parser {
 
   // -- Parsing --
 
-  // JSL only has one type of statement right now.
   private parseStatement(): ASTStatement {
     return this.parseExpressionStatement();
   }
@@ -192,8 +187,8 @@ class Parser {
   }
 
   private parseIntegerLiteral(): ASTExpression | undefined {
-    const value = parseInt(this.curToken.literal);
-    if (value !== 0 && !value) {
+    const value = parseInt(this.curToken.literal, 10);
+    if (isNaN(value) && !value) {
       this.errors.push(`could not parse ${this.curToken.literal} as integer`);
 
       return;

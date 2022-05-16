@@ -52,7 +52,7 @@ class Parser {
     this.nextToken();
   }
 
-  public parseProgram(): Program {
+  parseProgram(): Program {
     let program = new Program();
 
     while (!this.isCurToken(eof)) {

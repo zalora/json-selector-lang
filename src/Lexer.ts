@@ -18,7 +18,7 @@ class Lexer {
   }
 
   //  nextToken returns the next lexed token for the given input
-  public nextToken(): Token {
+  nextToken(): Token {
     const ch = this.currentCharacter;
     if (!ch) {
       return { type: eof, literal: '' };

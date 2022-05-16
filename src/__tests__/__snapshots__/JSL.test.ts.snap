@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSL tests with valid jsl input 1`] = `
+Program {
+  "statements": Array [
+    ASTExpressionStatement {
+      "expression": ASTIndexExpression {
+        "index": ASTIntegerLiteral {
+          "token": Object {
+            "literal": "224",
+            "type": Symbol(int),
+          },
+          "value": 224,
+        },
+        "left": ASTSelectExpression {
+          "key": "data",
+          "token": Object {
+            "literal": ".",
+            "type": Symbol(.),
+          },
+        },
+        "token": Object {
+          "literal": "[",
+          "type": Symbol([),
+        },
+      },
+      "token": Object {
+        "literal": ".",
+        "type": Symbol(.),
+      },
+    },
+    ASTExpressionStatement {
+      "expression": ASTSelectExpression {
+        "key": "width",
+        "token": Object {
+          "literal": ".",
+          "type": Symbol(.),
+        },
+      },
+      "token": Object {
+        "literal": ".",
+        "type": Symbol(.),
+      },
+    },
+  ],
+}
+`;

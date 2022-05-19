@@ -188,7 +188,7 @@ class Parser {
 
   private parseIntegerLiteral(): ASTExpression | undefined {
     const value = parseInt(this.curToken.literal, 10);
-    if (isNaN(value) && !value) {
+    if (isNaN(value)) {
       this.errors.push(`could not parse ${this.curToken.literal} as integer`);
 
       return;

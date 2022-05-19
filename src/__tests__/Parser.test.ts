@@ -159,6 +159,47 @@ describe('Parser', () => {
     expect(expr2.key).toEqual('id');
   });
 
+  it('tests with index expression complex with zeroth index as input', () => {
+    const input = '.images[0].id';
+    const l = new Lexer(input);
+    const p = new Parser(l);
+    const subject = p.parseProgram();
+
+    const exprStmt = subject?.statements[0] as ASTExpressionStatement;
+    if (!exprStmt) {
+      fail('first statement not ASTExpressionStatement');
+    }
+    expect(exprStmt.tokenLiteral()).toEqual('.');
+    const expr = exprStmt.expression as ASTIndexExpression;
+    if (!expr) {
+      fail(`ExpressionStatement's expression is not IndexExpression`);
+    }
+    const sel = expr.left as ASTSelectExpression;
+    if (!sel) {
+      fail(`index's left isn't ASTSelectExpression`);
+    }
+    const idx = expr.index as ASTIntegerLiteral;
+    if (!idx) {
+      fail(`index's index isn't ASTIntegerLiteral`);
+    }
+    const exprStmt2 = subject?.statements[1] as ASTExpressionStatement;
+    if (!exprStmt2) {
+      fail('first statement not ASTExpressionStatement');
+    }
+    expect(exprStmt2.tokenLiteral()).toEqual('.');
+    const expr2 = exprStmt2.expression as ASTSelectExpression;
+    if (!expr2) {
+      fail(`ExpressionStatement's expression is not IndexExpression`);
+    }
+
+    expect(sel.key).toEqual('images');
+    expect(sel.token.type).toEqual(dot);
+    expect(idx.value).toEqual(0);
+    expect(idx.token.type).toEqual(int);
+    expect(expr2.token.literal).toEqual('.');
+    expect(expr2.key).toEqual('id');
+  });
+
   it('tests with invalid index expression', () => {
     const input = '.data.images[something]';
     const l = new Lexer(input);

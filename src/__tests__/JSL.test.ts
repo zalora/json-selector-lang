@@ -4,7 +4,6 @@
 // LICENSE file in the root directory of this source tree.
 
 import JSL from '../JSL';
-import { JSLParserError, ParserError } from '../Parser';
 
 describe('JSL', () => {
   it('tests with valid jsl input', () => {
@@ -12,7 +11,7 @@ describe('JSL', () => {
     try {
       const program = JSL.compile(input);
       expect(program).toMatchSnapshot();
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
       fail();
     }
@@ -20,12 +19,12 @@ describe('JSL', () => {
 
   it('tests with invalid jsl input', () => {
     const input = '..[]';
-    let returnedError: Array<ParserError> = [];
+    let returnedError: Array<string> = [];
 
     try {
       JSL.compile(input);
-    } catch (e) {
-      returnedError = (e as JSLParserError).getErrors();
+    } catch (e: any) {
+      returnedError = e;
     }
 
     if (returnedError.length < 0) {
@@ -34,13 +33,13 @@ describe('JSL', () => {
 
     expect(returnedError.length).toEqual(4);
     const testCases = [
-      new ParserError('expected next token to be Symbol(ident), got Symbol(.) instead'),
-      new ParserError('expected next token to be Symbol(ident), got Symbol([) instead'),
-      new ParserError('expected next token to be Symbol(int), got Symbol(]) instead'),
-      new ParserError('prefix parse func for ] not found'),
+      'expected next token to be Symbol(ident), got Symbol(.) instead',
+      'expected next token to be Symbol(ident), got Symbol([) instead',
+      'expected next token to be Symbol(int), got Symbol(]) instead',
+      'prefix parse func for ] not found',
     ];
     testCases.forEach((testCase, idx) => {
-      expect(returnedError[idx].getMessage()).toEqual(testCase.getMessage());
+      expect(returnedError[idx]).toEqual(testCase);
     });
   });
 });

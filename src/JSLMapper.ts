@@ -6,13 +6,12 @@
 import Program from './AST/Program';
 import JSL from './JSL';
 import JSLEvaluator from './JSLEvaluator';
-import { ParserError } from './Parser';
 
 class JSLMapper {
   static select(jsl: string, json: any) {
     const program: Program = JSL.compile(jsl);
     if (program.statements.length <= 0) {
-      throw new ParserError('jsl string generates empty statements');
+      throw 'JSL string generates empty statements';
     }
 
     const evaluator = new JSLEvaluator();

@@ -9,7 +9,6 @@ import ASTExpressionStatement from './AST/ASTExpressionStatement';
 import ASTIndexExpression from './AST/ASTIndexExpression';
 import ASTIntegerLiteral from './AST/ASTIntegerLiteral';
 import ASTSelectExpression from './AST/ASTSelectExpression';
-import { ParserError } from './Parser';
 
 interface JSLEvaluating {
   evaluate(json: any, node: ASTNode): any;
@@ -29,7 +28,7 @@ class JSLEvaluator implements JSLEvaluating {
       case ASTIntegerLiteral:
         return this.evaluateIntegerExpression(node as ASTIntegerLiteral);
       default:
-        throw new ParserError(`${node.tokenLiteral()} node evaluation not supported`);
+        throw `${node.tokenLiteral()} node evaluation not supported`;
     }
   }
 
@@ -49,7 +48,7 @@ class JSLEvaluator implements JSLEvaluating {
   private evaluateExpressionStatement(statement: ASTExpressionStatement, json: any): any {
     const expression = statement.expression;
     if (!expression) {
-      throw new ParserError(`expression: ${statement.toString()} not found`);
+      throw `Expression: ${statement.toString()} not found`;
     }
 
     return this.evaluate(json, expression);
@@ -59,13 +58,13 @@ class JSLEvaluator implements JSLEvaluating {
 
   private evaluateSelectExpression(expression: ASTSelectExpression, json: any): any {
     if (typeof json !== 'object') {
-      throw new ParserError(`invalid nested key sequence ${expression.key}`);
+      throw `Invalid nested key sequence ${expression.key}`;
     }
 
     const key: string = expression.key;
     const selectedValue: any = json[key];
     if (!selectedValue) {
-      throw new ParserError(`value not found for key: ${expression.key}`);
+      throw `Value not found for key: ${expression.key}`;
     }
 
     return selectedValue;
@@ -75,7 +74,7 @@ class JSLEvaluator implements JSLEvaluating {
     const left = expression.left;
     const index = expression.index;
     if (!left || !index) {
-      throw new ParserError(`expression not found, ${expression.toString()}`);
+      throw `Expression: ${expression.toString()} not found`;
     }
 
     const arr: any = this.evaluate(json, left);
@@ -84,7 +83,7 @@ class JSLEvaluator implements JSLEvaluating {
       return arr[idx];
     }
 
-    throw new ParserError('invalid JSON');
+    throw 'Invalid JSON object';
   }
 
   private evaluateIntegerExpression(expression: ASTIntegerLiteral): number {

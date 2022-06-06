@@ -35,12 +35,7 @@ class JSLEvaluator implements JSLEvaluating {
   // -- Program evaluation --
 
   private evaluateProgram(program: Program, json: any): any {
-    let val = json;
-    program.statements.forEach((statement) => {
-      val = this.evaluate(val, statement);
-    });
-
-    return val;
+    return program.statements.reduce((prev, statement) => this.evaluate(prev, statement), json);
   }
 
   // -- Expression Statement evaluation --
@@ -79,11 +74,11 @@ class JSLEvaluator implements JSLEvaluating {
 
     const arr: any = this.evaluate(json, left);
     const idx: number = this.evaluate(json, index);
-    if (Array.isArray(arr) && (idx === 0 || idx) && arr.length > idx) {
+    if (Array.isArray(arr) && isFinite(idx) && arr.length > idx) {
       return arr[idx];
     }
 
-    throw 'Invalid JSON object';
+    throw `cannot subscript at ${expression.toString()}[${idx}]`;
   }
 
   private evaluateIntegerExpression(expression: ASTIntegerLiteral): number {

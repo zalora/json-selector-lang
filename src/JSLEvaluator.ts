@@ -10,11 +10,7 @@ import ASTIndexExpression from './AST/ASTIndexExpression';
 import ASTIntegerLiteral from './AST/ASTIntegerLiteral';
 import ASTSelectExpression from './AST/ASTSelectExpression';
 
-interface JSLEvaluating {
-  evaluate(json: any, node: ASTNode): any;
-}
-
-class JSLEvaluator implements JSLEvaluating {
+class JSLEvaluator {
   evaluate(json: any, node: ASTNode): any {
     switch (node.constructor) {
       case Program:
@@ -74,7 +70,7 @@ class JSLEvaluator implements JSLEvaluating {
 
     const arr: any = this.evaluate(json, left);
     const idx: number = this.evaluate(json, index);
-    if (Array.isArray(arr) && isFinite(idx) && arr.length > idx) {
+    if (Array.isArray(arr) && arr.length > idx) {
       return arr[idx];
     }
 

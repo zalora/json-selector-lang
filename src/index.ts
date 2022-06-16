@@ -1,5 +1,3 @@
-const Program = () => {
-  return 'hello world!';
-};
+import JSL from './JSL';
 
-export default Program;
+export { JSL as jsl };

@@ -26,13 +26,11 @@ const json = {
 You can select the `items` array as follows:
 
 ```javascript
-import { JSL, JSLEvaluator } from 'json-selector-lang';
+import { jsl } from 'json-selector-lang';
 
 try {
-  const itemsSelector = JSL.compile('.data.Data.items');
-
-  const evaluator = new JSLEvaluator();
-  const items = evaluator.evaluate(data, itemsSelector);
+  const itemsSelector = jsl.compile('.data.Data.items');
+  const items = jsl.evaluate(data, itemsSelector);
 
   // [1, 3, 5, 7] should be the value of items
 } catch (e) {

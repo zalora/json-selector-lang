@@ -6,6 +6,7 @@
 import Lexer from './Lexer';
 import Parser from './Parser';
 import Program from './AST/Program';
+import JSLEvaluator from './JSLEvaluator';
 
 // JSL parses raw JSL input and returns a program that can be evaluated.
 class JSL {
@@ -14,6 +15,12 @@ class JSL {
     const parser = new Parser(lexer);
 
     return parser.parseProgram();
+  }
+
+  static evaluate(json: any, node: Program) {
+    const evaluator = new JSLEvaluator();
+
+    return evaluator.evaluate(json, node);
   }
 }
 

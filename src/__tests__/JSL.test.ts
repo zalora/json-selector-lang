@@ -6,11 +6,35 @@
 import JSL from '../JSL';
 
 describe('JSL', () => {
-  it('tests with valid jsl input', () => {
+  it('tests with valid & complex jsl input', () => {
     const input = '.data[224].width';
+    const data = [];
+    data.length = 230;
+    data[224] = { width: 20 };
+    const json = { data };
+
     try {
       const program = JSL.compile(input);
+      const width = JSL.evaluate(json, program);
+
       expect(program).toMatchSnapshot();
+      expect(width).toMatchSnapshot();
+    } catch (e: any) {
+      console.log(e);
+      fail();
+    }
+  });
+
+  it('tests with valid jsl input', () => {
+    const input = '.data[2].width';
+    const json = { data: [{}, {}, { width: 200 }] };
+
+    try {
+      const program = JSL.compile(input);
+      const width = JSL.evaluate(json, program);
+
+      expect(program).toMatchSnapshot();
+      expect(width).toMatchSnapshot();
     } catch (e: any) {
       console.log(e);
       fail();

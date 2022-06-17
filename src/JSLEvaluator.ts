@@ -53,12 +53,11 @@ class JSLEvaluator {
     }
 
     const key: string = expression.key;
-    const selectedValue: any = json[key];
-    if (!selectedValue) {
-      throw `Value not found for key: ${expression.key}`;
+    if (!json.hasOwnProperty(key)) {
+      throw `Key not found in the json: ${expression.key}`;
     }
 
-    return selectedValue;
+    return json[key];
   }
 
   private evaluateIndexExpression(expression: ASTIndexExpression, json: any): any {

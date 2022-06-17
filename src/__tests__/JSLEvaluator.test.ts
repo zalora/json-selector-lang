@@ -25,6 +25,68 @@ describe('JSLEvaluator', () => {
     }
   });
 
+  it('tests with valid jsl input and all falsy values as the output', () => {
+    const testCases = [
+      { input: '.data[0].width', output: false },
+      { input: '.data[1].width', output: null },
+      { input: '.data[2].width', output: undefined },
+      { input: '.data[3].width', output: NaN },
+      { input: '.data[4].width', output: 0 },
+      { input: '.data[5].width', output: '' },
+    ];
+    const json = {
+      data: [
+        { width: false },
+        { width: null },
+        { width: undefined },
+        { width: NaN },
+        { width: 0 },
+        { width: '' },
+      ],
+    };
+
+    testCases.forEach(({ input, output }) => {
+      try {
+        const program = JSL.compile(input);
+        if (program.statements.length <= 0) {
+          throw 'JSL string generates empty statements';
+        }
+
+        const evaluator = new JSLEvaluator();
+        const e = evaluator.evaluate(json, program);
+        expect(e).toEqual(output);
+      } catch (e: any) {
+        console.log(e);
+        fail();
+      }
+    });
+  });
+
+  it(`tests with valid jsl input and no data in the input object`, () => {
+    const input = '.data[2].width';
+    const json = { data: [{}, {}, {}] };
+    let returnedError: string = '';
+
+    try {
+      const program = JSL.compile(input);
+      if (program.statements.length <= 0) {
+        throw 'JSL string generates empty statements';
+      }
+
+      const evaluator = new JSLEvaluator();
+      const e = evaluator.evaluate(json, program);
+    } catch (e: any) {
+      returnedError = e;
+    }
+
+    if (!returnedError) {
+      fail();
+    }
+
+    const testCase = 'Key not found in the json: width';
+    expect(returnedError).toEqual(testCase);
+  });
+
   it('tests with invalid jsl input', () => {
     const input = '..[]';
     const json = { data: [{}, {}, { width: 200 }] };

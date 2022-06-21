@@ -5,10 +5,10 @@
 
 import ASTNode from './ASTNode';
 
-/**
- * ASTStatement represents a statement.
- * All nodes in a Program are statements.
- */
+// ASTStatement represents a statement.
+// All nodes in a Program are statements.
+
+// tslint:disable-next-line:no-empty-interface
 interface ASTStatement extends ASTNode {}
 
 export default ASTStatement;

@@ -25,7 +25,7 @@ type InfixParser = (arg?: ASTExpression) => ASTExpression | undefined;
 
 class Parser {
   private lexer: Lexer;
-  private errors: Array<string> = [];
+  private errors: string[] = [];
 
   private curToken!: Token;
   private peekToken!: Token;
@@ -53,7 +53,7 @@ class Parser {
   }
 
   parseProgram(): Program {
-    let program = new Program();
+    const program = new Program();
 
     while (!this.isCurToken(eof)) {
       const stmt = this.parseStatement();
@@ -107,7 +107,7 @@ class Parser {
     );
   }
 
-  private noPrefixParseFuncErr(type: String): void {
+  private noPrefixParseFuncErr(type: string): void {
     this.errors.push(`prefix parse func for ${type} not found`);
   }
 
@@ -178,7 +178,7 @@ class Parser {
       return;
     }
 
-    let idx = this.parseExpression(Precedence.lowest);
+    const idx = this.parseExpression(Precedence.lowest);
     if (!this.expectPeek(rbracket)) {
       return;
     }

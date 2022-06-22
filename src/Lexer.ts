@@ -7,7 +7,7 @@ import { dot, int, ident, lbracket, rbracket, eof, Token } from './tokens';
 
 // Lexer represents the lexical analyzer for JSON Selector Language
 class Lexer {
-  private input: Array<string> = [];
+  private input: string[] = [];
   private position: number = 0;
   private readPosition: number = 0;
   private currentCharacter: string = '';
@@ -73,27 +73,27 @@ class Lexer {
 
   // readIdentifier returns a token with an identifier as the literal
   private readIdentifier(): Token {
-    let startIdx = this.position;
+    const startIdx = this.position;
     while (this.isIdent(this.currentCharacter)) {
       this.readChar();
     }
 
-    const identfier: Array<string> = this.input.slice(startIdx, this.position);
-    const identStr: string = identfier.join('');
+    const identifier: string[] = this.input.slice(startIdx, this.position);
+    const identStr: string = identifier.join('');
 
     return { type: ident, literal: identStr };
   }
 
   // readNumber returns a token with a numeric literal
   private readNumber(): string {
-    let startIdx = this.position;
+    const startIdx = this.position;
     while (this.isNumeric(this.currentCharacter)) {
       this.readChar();
     }
 
-    const number: Array<string> = this.input.slice(startIdx, this.position);
+    const num: string[] = this.input.slice(startIdx, this.position);
 
-    return number.join('');
+    return num.join('');
   }
 
   // isIdent returns true if a character is not one of the other tokens

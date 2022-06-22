@@ -24,7 +24,7 @@ class JSLEvaluator {
       case ASTIntegerLiteral:
         return this.evaluateIntegerExpression(node as ASTIntegerLiteral);
       default:
-        throw `${node.tokenLiteral()} node evaluation not supported`;
+        throw new Error(`${node.tokenLiteral()} node evaluation not supported`);
     }
   }
 
@@ -39,7 +39,7 @@ class JSLEvaluator {
   private evaluateExpressionStatement(statement: ASTExpressionStatement, json: any): any {
     const expression = statement.expression;
     if (!expression) {
-      throw `Expression: ${statement.toString()} not found`;
+      throw new Error(`Expression: ${statement.toString()} not found`);
     }
 
     return this.evaluate(json, expression);
@@ -49,12 +49,12 @@ class JSLEvaluator {
 
   private evaluateSelectExpression(expression: ASTSelectExpression, json: any): any {
     if (typeof json !== 'object') {
-      throw `Invalid nested key sequence ${expression.key}`;
+      throw new Error(`Invalid nested key sequence ${expression.key}`);
     }
 
     const key: string = expression.key;
     if (!json.hasOwnProperty(key)) {
-      throw `Key not found in the json: ${expression.key}`;
+      throw new Error(`Key not found in the json: ${expression.key}`);
     }
 
     return json[key];
@@ -64,7 +64,7 @@ class JSLEvaluator {
     const left = expression.left;
     const index = expression.index;
     if (!left || !index) {
-      throw `Expression: ${expression.toString()} not found`;
+      throw new Error(`Expression: ${expression.toString()} not found`);
     }
 
     const arr: any = this.evaluate(json, left);
@@ -73,7 +73,7 @@ class JSLEvaluator {
       return arr[idx];
     }
 
-    throw `cannot subscript at ${expression.toString()}[${idx}]`;
+    throw new Error(`cannot subscript at ${expression.toString()}[${idx}]`);
   }
 
   private evaluateIntegerExpression(expression: ASTIntegerLiteral): number {

@@ -7,7 +7,7 @@ import ASTNode from './ASTNode';
 
 // Program is the root node of the abstract syntax tree representing the JSL input.
 class Program implements ASTNode {
-  statements: Array<ASTNode>;
+  statements: ASTNode[];
 
   constructor() {
     this.statements = [];

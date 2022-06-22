@@ -83,14 +83,14 @@ describe('JSLEvaluator', () => {
       fail();
     }
 
-    const testCase = 'Key not found in the json: width';
+    const testCase = new Error('Key not found in the json: width');
     expect(returnedError).toEqual(testCase);
   });
 
   it('tests with invalid jsl input', () => {
     const input = '..[]';
     const json = { data: [{}, {}, { width: 200 }] };
-    let returnedError: Array<string> = [];
+    let returnedError: string[] = [];
 
     try {
       const program = JSL.compile(input);

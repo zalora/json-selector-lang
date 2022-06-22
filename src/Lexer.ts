@@ -78,8 +78,8 @@ class Lexer {
       this.readChar();
     }
 
-    const identfier: string[] = this.input.slice(startIdx, this.position);
-    const identStr: string = identfier.join('');
+    const identifier: string[] = this.input.slice(startIdx, this.position);
+    const identStr: string = identifier.join('');
 
     return { type: ident, literal: identStr };
   }

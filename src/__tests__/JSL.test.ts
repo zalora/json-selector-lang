@@ -66,4 +66,20 @@ describe('JSL', () => {
       expect(returnedError[idx]).toEqual(testCase);
     });
   });
+
+  it('tests with empty jsl input', () => {
+    const input = '';
+    const json = { data: [{}, {}, { width: 200 }] };
+
+    try {
+      const program = JSL.compile(input);
+      const width = JSL.evaluate(json, program);
+
+      expect(program).toMatchSnapshot();
+      expect(width).toMatchSnapshot();
+    } catch (e: any) {
+      console.log(e);
+      fail();
+    }
+  });
 });

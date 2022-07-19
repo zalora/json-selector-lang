@@ -17,7 +17,12 @@ class JSL {
     return parser.parseProgram();
   }
 
-  static evaluate(json: any, node: Program) {
+  static evaluate(json: any, node: Program): any {
+    // if there is no statements, then no use in evaluvating the program
+    if (node?.statements?.length === 0) {
+      return null;
+    }
+
     const evaluator = new JSLEvaluator();
 
     return evaluator.evaluate(json, node);

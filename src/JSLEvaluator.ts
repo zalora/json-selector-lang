@@ -31,6 +31,10 @@ class JSLEvaluator {
   // -- Program evaluation --
 
   private evaluateProgram(program: Program, json: any): any {
+    if (program?.statements?.length === 0) {
+      return null;
+    }
+
     return program.statements.reduce((prev, statement) => this.evaluate(prev, statement), json);
   }
 

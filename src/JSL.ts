@@ -17,7 +17,7 @@ class JSL {
     return parser.parseProgram();
   }
 
-  static evaluate(json: any, node: Program) {
+  static evaluate(json: any, node: Program): any {
     const evaluator = new JSLEvaluator();
 
     return evaluator.evaluate(json, node);

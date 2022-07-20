@@ -6,8 +6,6 @@ Program {
 }
 `;
 
-exports[`JSL tests with empty jsl input 2`] = `null`;
-
 exports[`JSL tests with valid & complex jsl input 1`] = `
 Program {
   "statements": Array [

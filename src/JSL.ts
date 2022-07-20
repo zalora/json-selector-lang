@@ -18,7 +18,6 @@ class JSL {
   }
 
   static evaluate(json: any, node: Program): any {
-    // if there is no statements, then no use in evaluvating the program
     if (node?.statements?.length === 0) {
       return null;
     }

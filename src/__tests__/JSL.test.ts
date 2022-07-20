@@ -76,7 +76,7 @@ describe('JSL', () => {
       const width = JSL.evaluate(json, program);
 
       expect(program).toMatchSnapshot();
-      expect(width).toMatchSnapshot();
+      expect(width).toBeNull();
     } catch (e: any) {
       console.log(e);
       fail();

@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`JSL tests with empty jsl input 1`] = `
-Program {
-  "statements": Array [],
-}
-`;
-
 exports[`JSL tests with valid & complex jsl input 1`] = `
 Program {
   "statements": Array [

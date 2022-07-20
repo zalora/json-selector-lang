@@ -18,10 +18,6 @@ class JSL {
   }
 
   static evaluate(json: any, node: Program): any {
-    if (node?.statements?.length === 0) {
-      return null;
-    }
-
     const evaluator = new JSLEvaluator();
 
     return evaluator.evaluate(json, node);

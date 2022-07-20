@@ -119,4 +119,19 @@ describe('JSLEvaluator', () => {
       expect(returnedError[idx]).toEqual(testCase);
     });
   });
+
+  it('tests with valid jsl input', () => {
+    const input = '';
+    const json = { data: [{}, {}, { width: 200 }] };
+    try {
+      const program = JSL.compile(input);
+      const evaluator = new JSLEvaluator();
+      const e = evaluator.evaluate(json, program);
+
+      expect(e).toBeNull();
+    } catch (e: any) {
+      console.log(e);
+      fail();
+    }
+  });
 });
